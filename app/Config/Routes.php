@@ -9,3 +9,5 @@ $routes->get('index', 'Home::index');
 
 
 $routes->get('/', 'Home::login');
+
+$routes->get('perfil','Home::perfil');
