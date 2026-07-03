@@ -26,6 +26,22 @@ class Home extends BaseController
         return view('perfil');
     }
 
+    public function criarconta(): string
+    {
+        
+        #return view('minha_primeira_pagina');
+         return view('criarconta');
+
+    }
+
+     public function criarcontaempresa(): string
+    {
+        
+        #return view('minha_primeira_pagina');
+         return view('criarcontaempresa');
+
+    }
+
 }
     
 ?>
