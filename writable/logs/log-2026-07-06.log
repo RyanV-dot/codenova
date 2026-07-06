@@ -70,3 +70,15 @@ in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
  7 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
  8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  9 FCPATH\index.php(64): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-07-06 23:24:58 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "criarconta.php"
+[Method: GET, Route: criarconta]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(226): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('criarconta.php')
+ 2 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('criarconta', [], true)
+ 3 APPPATH\Controllers\Home.php(44): view('criarconta')
+ 4 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Home->criarconta()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(64): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
