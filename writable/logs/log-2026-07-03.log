@@ -1,0 +1,42 @@
+CRITICAL - 2026-07-03 00:42:49 --> ErrorException: Undefined variable $usuario
+[Method: GET, Route: perfil]
+in APPPATH\Views\perfil.php on line 49.
+ 1 APPPATH\Views\perfil.php(49): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $usuario', 'C:\\xampp\\htdocs\\codenova\\codenova\\app\\Views\\perfil.php', 49)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp\\htdocs\\codenova\\codenova\\app\\Views\\perfil.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('perfil', [], true)
+ 5 APPPATH\Controllers\Home.php(26): view('perfil')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Home->perfil()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(64): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-07-03 00:44:47 --> ErrorException: Undefined variable $usuario
+[Method: GET, Route: perfil]
+in APPPATH\Views\perfil.php on line 49.
+ 1 APPPATH\Views\perfil.php(49): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $usuario', 'C:\\xampp\\htdocs\\codenova\\codenova\\app\\Views\\perfil.php', 49)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp\\htdocs\\codenova\\codenova\\app\\Views\\perfil.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('perfil', [], true)
+ 5 APPPATH\Controllers\Home.php(27): view('perfil')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Home->perfil()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(64): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-07-03 00:44:48 --> ErrorException: Undefined variable $usuario
+[Method: GET, Route: perfil]
+in APPPATH\Views\perfil.php on line 49.
+ 1 APPPATH\Views\perfil.php(49): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $usuario', 'C:\\xampp\\htdocs\\codenova\\codenova\\app\\Views\\perfil.php', 49)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp\\htdocs\\codenova\\codenova\\app\\Views\\perfil.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('perfil', [], true)
+ 5 APPPATH\Controllers\Home.php(27): view('perfil')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Home->perfil()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(64): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

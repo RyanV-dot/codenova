@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
 </head>
 <style>
     body {
@@ -91,10 +92,8 @@
 
                 <button type="submit">Criar Conta</button>
 
-                <a href="criarcontaempresa"> criar conta como empresa </a><br>
-                <a href="login"> tela de login </a>
-
-
+                <a href="<?= base_url('home/criarcontaempresa'); ?>"> criar conta como empresa </a><br>
+                <a href="<?= base_url('/'); ?>"> tela de login </a>
             </form>
 
         </div>
