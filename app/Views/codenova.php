@@ -92,7 +92,7 @@
 
                 <button type="submit">Criar Conta</button>
 
-                <a href="<?= base_url('home/criarcontaempresa'); ?>"> criar conta como empresa </a><br>
+                <a href="<?= base_url('criarcontaempresa'); ?>"> criar conta como empresa </a><br>
                 <a href="<?= base_url('/'); ?>"> tela de login </a>
             </form>
 

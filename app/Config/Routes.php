@@ -12,6 +12,8 @@ $routes->get('/', 'Home::login');
 
 $routes->get('perfil', 'Home::perfil');
 
-$routes->get('home/criarconta', 'Home::criarconta');
+$routes->get('criarconta', 'Home::criarconta');
 
-$routes->get('home/criarcontaempresa', 'Home::criarcontaempresa');
+$routes->get('criarcontaempresa', 'Home::criarcontaempresa');
+
+$routes->get('principal','Home::principal');

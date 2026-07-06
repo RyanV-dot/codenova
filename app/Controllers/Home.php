@@ -53,6 +53,12 @@ class Home extends BaseController
 
     }
 
+    public function principal(): string
+    {
+        return view('principal');
+
+    }
+
 }
 
 ?>

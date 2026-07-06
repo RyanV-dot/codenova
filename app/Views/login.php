@@ -72,7 +72,7 @@
 
 <body>
   <img src='codenova.png' height='100' width='100' class='img'>
-  <button type="submit" class="btn btn-primary" class="div.absolute"><a href="<?= base_url('home/criarconta'); ?>">criar
+  <button type="submit" class="btn btn-primary" class="div.absolute"><a href="<?= base_url('criarconta'); ?>">criar
       conta</a></button>
 
   <h2>Portal Emprega NL</h2>
