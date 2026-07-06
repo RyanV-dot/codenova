@@ -77,7 +77,7 @@
 
   <h2>Portal Emprega NL</h2>
   <h1> Secretaria Municipal de Desenvolvimento Econômico</h1>
-  <form action="/action_page.php" class="form">
+  <form action="<?= base_url('perfil'); ?>" class="form">
     <div class="mb-3 mt-3">
       <label for="email">Email:</label>
       <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
