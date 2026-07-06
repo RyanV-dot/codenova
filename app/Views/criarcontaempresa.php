@@ -73,7 +73,7 @@
 
             <h2>Criar Conta Empresa</h2>
 
-            <form class="form">
+            <form class="form" method="post" action="<?= base_url('/')?>">
 
                 <label>Nome Da Empresa/ Instituição</label>
                 <input type="text" placeholder="Digite seu nome completo"><br><br>
