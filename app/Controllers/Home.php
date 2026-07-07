@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use codenova\Models;
+use App\Models\vagasModel;
 
 class Home extends BaseController
 {
@@ -53,10 +53,13 @@ class Home extends BaseController
 
     }
 
-    public function principal(): string
-    {
-        return view('principal');
 
+    public function vagas()
+    {
+        $vagas = new vagasModel();
+        $dados['vagas'] = $vagas->buscarVagas();
+
+        return view('principal', $dados);
     }
 
 }
