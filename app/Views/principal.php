@@ -79,17 +79,6 @@
 
     </table>
 
-    <div class="vaga">
-        <div class="semijuntinho">
-            <p>Vaga</p>
-            <p>TI</p>
-            <p>Aberta</p> <br>
-        </div>
-        <td></td>
-        </tr>
-
-        </table>
-
 
         <div class="vaga">
             <div class="semijuntinho">

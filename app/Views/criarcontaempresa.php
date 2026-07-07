@@ -91,6 +91,8 @@
                 <input type="password" placeholder="Digite sua senha">
 
                 <button type="submit">Criar Conta</button>
+                <a href="<?= base_url('criarconta'); ?>"> criar conta como usuario </a><br>
+                <a href="<?= base_url('/'); ?>"> tela de login </a>
 
             </form>
 
