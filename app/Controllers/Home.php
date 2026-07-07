@@ -62,6 +62,11 @@ class Home extends BaseController
         return view('principal', $dados);
     }
 
+    public function escolhaLogin()
+    {
+        return view('escolha');
+    }
+
 }
 
 ?>

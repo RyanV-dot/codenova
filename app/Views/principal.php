@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     <style>
+        body {
+            background-color: antiquewhite;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
         .semijuntinho {
             display: flex;
             justify-content: space-between;
@@ -36,6 +40,26 @@
             border: 2px solid rgba(208, 209, 209, 1);
             border-radius: 20px;
 
+        }
+
+        .mensagem {
+            color: white;
+            text-align: left;
+            background-color: #181fe1ff;
+            border: 2px transparent;
+            border-radius: 25px;
+            text-align: center;
+            margin: 20px;
+            padding: 10px;
+            position: relative;
+        }   
+
+        footer{
+
+            display: flex;
+            margin-left: 5%;
+            margin-right: 5%;
+            position: fixed;
         }
     </style>
 </head>
@@ -159,6 +183,8 @@
             </div>
         </div>
         <hr>
+
+        
 </body>
 
 </html>

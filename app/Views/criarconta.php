@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+
 </head>
 <style>
     body {
-        background-color: lightblue;
+        background-color: antiquewhite;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 
     .form {
@@ -24,9 +25,15 @@
 
     }
 
+    .junto {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     input {
         width: 100%;
-        padding: 12px;
+        padding: 8px;
         margin: 10px 0;
         border: 1px solid #ccc;
         border-radius: 10px;
@@ -41,6 +48,14 @@
         border: none;
         border-radius: 10px;
         cursor: pointer;
+    }
+
+    a{
+        text-decoration: none;
+        color: rgba(56, 60, 103, 1)
+    }
+    a:hover {
+        color: rgba(56, 60, 103, 0.5)
     }
 
     .img {
@@ -92,8 +107,10 @@
 
                 <button type="submit">Criar Conta</button>
 
-                <a href="<?= base_url('criarcontaempresa'); ?>"> criar conta como empresa </a><br>
-                <a href="<?= base_url('/'); ?>"> tela de login </a>
+                <div class="junto">
+                    <p><a href="<?= base_url('criarcontaempresa'); ?>"> criar conta como empresa </a></p><br>
+                    <p><a href="<?= base_url('/'); ?>"> tela de login </a></p>
+                </div>
             </form>
 
         </div>
