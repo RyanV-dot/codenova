@@ -69,14 +69,14 @@
         <div class="row g-0">
             
             <div class="col-md-6 d-none d-md-flex lado-esquerdo">
-                <img src="<?= base_url('codenova.png'); ?>" alt="Logo" class="img-banner">
+                <img src="<?= base_url('codenova_logo.jpeg'); ?>" alt="Logo" class="img-banner">
             </div>
 
             <div class="col-md-6 lado-direito">
                 <div class="form-container">
                     <h2>Criar Conta Empresa</h2>
 
-                    <form action="<?= base_url('/')?>" method="post">
+                    <form action="<?= base_url('salvarEmpresa')?>" method="post">
                         <div class="mb-3">
                             <label class="form-label">Nome da Empresa / Instituição</label>
                             <input type="text" class="form-control" placeholder="Digite o nome da instituição" required>

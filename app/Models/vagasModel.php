@@ -2,25 +2,22 @@
 
 namespace App\Models;
 
-use codenova\Model;
+use CodeIgniter\Model;
 
-class vagasModel {
+class vagasModel extends Model {
     protected $table = "vagas";
-    protected $primary_key = "id";
+    protected $primaryKey = "id";
+    protected $allowedFields = ['nome', 'statts', 'data_iniciada', 'requisitos', 'salario', 'data_encerrada', 'id_empresa', 'tipo'];
 
-    public function buscarVagas(){
-        $db = \Config\Database::connect();
+    // Busca todas as vagas trazendo junto o nome da empresa dona dela
+    public function buscarTodasVagas() {
+        return $this->select('vagas.*, empresa.nome as nome_empresa')
+                    ->join('empresa', 'empresa.id = vagas.id_empresa')
+                    ->findAll();
+    }
 
-        $sq1 = "SELECT nome, statts, data_iniciada, requisitos, salario, data_encerrada, tipo FROM vagas";
-
-        $query = $db->query($sq1);
-
-        return $query->getResultArray();
+    // Busca apenas as vagas de uma determinada empresa
+    public function buscarVagasPorEmpresa($id_empresa) {
+        return $this->where('id_empresa', $id_empresa)->findAll();
     }
 }
-
-
-
-
-
-?>

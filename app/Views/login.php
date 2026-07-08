@@ -91,7 +91,7 @@
     <div class="row g-0">
       
       <div class="col-md-6 d-none d-md-flex lado-esquerdo">
-        <img src="<?= base_url('codenova.png'); ?>" alt="Logo Emprega NL" class="img-banner">
+        <img src="<?= base_url('codenova_logo.jpeg'); ?>" alt="Logo Emprega NL" class="img-banner">
       </div>
 
       <div class="col-md-6 lado-direito">
@@ -99,7 +99,7 @@
           <h2>Portal Emprega NL</h2>
           <h1>Secretaria Municipal de Desenvolvimento Econômico</h1>
           
-          <form action="<?= base_url('principal'); ?>" method="get">
+          <form action="<?= base_url('logar'); ?>" method="post">
             <div class="mb-3">
               <label for="email" class="form-label">E-mail</label>
               <input type="email" class="form-control" id="email" placeholder="Digite seu e-mail" name="email" required>
