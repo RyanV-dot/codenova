@@ -8,14 +8,12 @@ class Home extends BaseController
     public function index(): string
     {
 
-        #return view('minha_primeira_pagina');
         return view('welcome_message');
 
     }
 
     public function login(): string
     {
-        #return view('minha_primeira_pagina');
         return view('login');
 
     }
@@ -39,16 +37,11 @@ class Home extends BaseController
 
     public function criarconta(): string
     {
-
-        #return view('minha_primeira_pagina');
         return view('criarconta');
-
     }
 
     public function criarcontaempresa(): string
     {
-
-        #return view('minha_primeira_pagina');
         return view('criarcontaempresa');
 
     }

@@ -16,6 +16,6 @@ $routes->get('criarconta', 'Home::criarconta');
 
 $routes->get('criarcontaempresa', 'Home::criarcontaempresa');
 
-$routes->get('principal','Home::vagas');
+$routes->post('principal','Home::vagas');
 
 $routes->get('escolha','Home::escolhaLogin');
