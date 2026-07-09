@@ -31,3 +31,9 @@ $routes->post('salvarEmpresa', 'Home::salvarEmpresa');
 $routes->get('criar-vaga','Home::criarVaga');
 
 $routes->get('sair','Home::sair');
+
+$routes->get('admin/candidatos', 'Home::candidatosAdmin');
+
+$routes->get('admin/empresas', 'Home::empresasAdmin');
+
+$routes->get('Home::salvarNovaVaga', 'Home::salvarNovaVaga');

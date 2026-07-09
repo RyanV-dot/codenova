@@ -5,8 +5,8 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 class vagasModel extends Model {
-    protected $table = "vagas";
-    protected $primaryKey = "id";
+    protected $table = 'vagas';
+    protected $primaryKey = 'id';
     protected $allowedFields = ['nome', 'statts', 'data_iniciada', 'requisitos', 'salario', 'data_encerrada', 'id_empresa', 'tipo'];
 
     // Busca todas as vagas trazendo junto o nome da empresa dona dela

@@ -1,102 +1,89 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <title>Perfil</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - Portal Emprega NL</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
-        .card-perfil {
-            background: linear-gradient(135deg, #0d6efd, #1e40ff);
-            color: white;
-            border-radius: 20px;
-            padding: 25px;
-        }
-
-        .avatar {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, .2);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            font-weight: bold;
-        }
-
-        .curriculo {
-            background: #fff;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
-        }
+        body { background-color: #f8f9fa; font-family: Verdana, Geneva, Tahoma, sans-serif; padding-bottom: 90px; }
+        .container-restrito { max-width: 900px; margin: 0 auto; }
+        .navbar-custom { background-color: #0d6efd; color: white; border-bottom: 3px solid #0a58ca; }
+        .perfil-card { background: white; border-radius: 24px; border: 2px solid #9c9d9eff; padding: 30px; box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
+        .vaga-card { background: #f8f9fa; border-radius: 18px; border: 1px solid #dee2e6; padding: 15px; margin-bottom: 15px; }
+        .footer-fixo { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; border-top: 2px solid #e9ecef; padding: 12px 0; z-index: 1030; }
     </style>
 </head>
-
 <body>
 
-    <div class="container mt-5">
-
-        <div class="card-perfil d-flex align-items-center">
-            <div class="avatar">
-                JS
-            </div>
-
-            <div class="ms-4">
-                <h4><?= $usuario['nome']; ?></h4>
-                <p><?= $usuario['email']; ?></p>
-                <span class="badge bg-light text-dark">Candidato</span>
-            </div>
+    <nav class="navbar navbar-custom py-3 mb-4">
+        <div class="container container-restrito d-flex justify-content-between align-items-center">
+            <div><span class="navbar-brand fw-bold text-white m-0">Portal Emprega NL</span></div>
+            <div><a href="<?= base_url('sair'); ?>" class="btn btn-sm btn-danger fw-bold border-white">Sair</a></div>
         </div>
+    </nav>
 
-        <div class="mt-4">
-            <h4>Informações Pessoais</h4>
+    <div class="container container-restrito">
+        <div class="perfil-card">
+            
+            <?php if($tipo_perfil === 'candidato'): ?>
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-primary"><?= $usuario['nome'] ?></h2>
+                    <span class="badge bg-primary px-3 py-2 rounded-pill">Perfil Candidato</span>
+                </div>
+                
+                <h4 class="fw-bold border-bottom pb-2">Informações Pessoais</h4>
+                <p><b>E-mail:</b> <?= $usuario['email'] ?></p>
+                <p><b>Telefone:</b> <?= $usuario['telefone'] ?></p>
+                <p><b>CPF:</b> <?= $usuario['cpf'] ?></p>
+                
+                <h4 class="fw-bold border-bottom pb-2 mt-4">Meu Currículo</h4>
+                <p><b>Experiências Registradas:</b></p>
+                <div class="p-3 bg-light rounded-3 border mb-3"><?= $usuario['experiencia'] ?></div>
+                
+                <button class="btn btn-primary w-100 fw-bold rounded-pill py-2" onclick="alert('Modal para edição de currículo via Banco de Dados')">Editar Currículo</button>
 
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <strong>Telefone</strong><br>
-                    <?= $usuario['telefone']; ?>
+            <?php else: ?>
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-success"><?= $usuario['nome'] ?></h2>
+                    <span class="badge bg-success px-3 py-2 rounded-pill">Perfil Corporativo</span>
                 </div>
 
-                <div class="col-md-6">
-                    <strong>Data de Nascimento</strong><br>
-                    <?= $usuario['nascimento']; ?>
+                <h4 class="fw-bold border-bottom pb-2">Informações Institucionais</h4>
+                <p><b>E-mail Corporativo:</b> <?= $usuario['email'] ?></p>
+                <p><b>Telefone de Contato:</b> <?= $usuario['telefone'] ?></p>
+                <p><b>CNPJ:</b> <?= $usuario['cnpj'] ?></p>
+
+                <div class="mt-4 mb-3 d-flex justify-content-between align-items-center">
+                    <h4 class="fw-bold m-0">Gerenciar Minhas Vagas</h4>
+                    <a href="<?= base_url('criar-vaga') ?>" class="btn btn-sm btn-success fw-bold rounded-pill px-3">+ Cadastrar Vaga</a>
                 </div>
 
-                <div class="col-md-6 mt-3">
-                    <strong>Área de Interesse</strong><br>
-                    <?= $usuario['area']; ?>
-                </div>
-            </div>
+                <?php if(!empty($vagas_empresa)): ?>
+                    <?php foreach($vagas_empresa as $ve): ?>
+                        <div class="vaga-card d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="fw-bold m-0 text-dark"><?= $ve['nome'] ?></h6>
+                                <small class="text-muted">Salário: R$ <?= $ve['salario'] ?> | Status: <?= $ve['statts'] ?></small>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="alert('Editar vaga ID: <?= $ve['id'] ?>')">Editar Vaga</button>
+                        </div>
+                    <?php endforeach; ?>
+                    <div class="d-flex justify-content-center mt-2"><?= $pager->links('vagas') ?></div>
+                <?php else: ?>
+                    <p class="text-muted small">Nenhuma vaga criada por esta empresa ainda.</p>
+                <?php endif; ?>
+            <?php endif; ?>
+
         </div>
+    </div>
 
-        <div class="mt-4">
-            <a href="#" class="btn btn-outline-primary w-100">
-                Editar Currículo
-            </a>
+    <div class="footer-fixo">
+        <div class="container container-restrito d-flex justify-content-around">
+            <a href="<?= base_url('principal'); ?>" class="btn btn-outline-secondary btn-sm px-4 fw-bold rounded-pill">🏠 Início</a>
+            <a href="<?= base_url('perfil'); ?>" class="btn btn-primary btn-sm px-4 fw-bold rounded-pill">👤 Perfil</a>
         </div>
-
-        <div class="curriculo mt-4">
-            <h4>Meu Currículo</h4>
-
-            <h6 class="mt-3">OBJETIVO</h6>
-            <p><?= $usuario['objetivo']; ?></p>
-
-            <h6>EXPERIÊNCIA</h6>
-            <p><?= $usuario['experiencia']; ?></p>
-
-            <h6>FORMAÇÃO</h6>
-            <p><?= $usuario['formacao']; ?></p>
-
-            <h6>HABILIDADES</h6>
-            <p><?= $usuario['habilidades']; ?></p>
-        </div>
-
     </div>
 
 </body>
-
 </html>

@@ -5,28 +5,15 @@ namespace App\Controllers;
 use App\Models\CandidatoModel;
 use App\Models\EmpresaModel;
 use App\Models\vagasModel;
-use App\Models\InscricaoModel;
 
 class Home extends BaseController
 {
     protected $session;
 
     public function __construct() {
-        // Inicializa a Session para controle de segurança em todas as páginas
         $this->session = \Config\Services::session();
     }
 
-    public function index(): string
-    {
-        return view('welcome_message');
-    }
-
-    public function login(): string
-    {
-        return view('login');
-    }
-
-    // Processa a Autenticação dos 3 tipos de usuários
     public function logar()
     {
         $email = $this->request->getPost('email');
@@ -44,10 +31,8 @@ class Home extends BaseController
             return redirect()->to(base_url('principal'));
         }
 
+        // 2. Verificação de Candidato
         $candidatoM = new CandidatoModel();
-        $empresaM   = new EmpresaModel();
-
-        // 2. Tenta autenticar na tabela Candidato
         $candidato = $candidatoM->verificarLogin($email, $senha);
         if ($candidato) {
             $this->session->set([
@@ -60,7 +45,8 @@ class Home extends BaseController
             return redirect()->to(base_url('principal'));
         }
 
-        // 3. Tenta autenticar na tabela Empresa
+        // 3. Verificação de Empresa
+        $empresaM = new EmpresaModel();
         $empresa = $empresaM->verificarLogin($email, $senha);
         if ($empresa) {
             $this->session->set([
@@ -73,126 +59,122 @@ class Home extends BaseController
             return redirect()->to(base_url('principal'));
         }
 
-        // Se falhar em todos, retorna para a tela de login com mensagem de erro
-        return redirect()->to(base_url('/'))->with('erro', 'Credenciais inválidas para acesso.');
+        // SE CHEGOU AQUI: E-mail ou Senha estão incorretos
+        // Define o Flashdata com o erro e redireciona de volta para a tela de login
+        $this->session->setFlashdata('erro_login', 'E-mail ou senha incorretos. Tente novamente.');
+        return redirect()->back()->withInput();
     }
 
-    // Tela Principal Protegida por Sessão
     public function vagas()
     {
-        // Impede acessos diretos via URL (Se não passou pela autenticação, volta pro login)
+        // Segurança: se não estiver logado, joga para o login
         if (!$this->session->get('logado')) {
             return redirect()->to(base_url('/'));
         }
 
         $vagasM = new vagasModel();
-        $inscricaoM = new InscricaoModel();
+        $tipo_perfil = $this->session->get('tipo_perfil');
         
-        $data['tipo_perfil'] = $this->session->get('tipo_perfil');
+        $data['tipo_perfil'] = $tipo_perfil;
         $data['nome_usuario'] = $this->session->get('nome');
-        $id_usuario = $this->session->get('id_usuario');
 
-        if ($data['tipo_perfil'] == 'candidato') {
-            // Candidato: lista tudo e checa o pivô para desativar botão onde já se inscreveu
-            $vagas_disponiveis = $vagasM->buscarTodasVagas();
-            foreach ($vagas_disponiveis as &$vaga) {
-                $vaga['ja_inscrito'] = $inscricaoM->jaInscrito($id_usuario, $vaga['id']);
-            }
-            $data['vagas'] = $vagas_disponiveis;
-
-        } elseif ($data['tipo_perfil'] == 'empresa') {
-            // Empresa: lista apenas as dela e puxa do pivô os candidatos reais concorrendo
-            $vagas_empresa = $vagasM->buscarVagasPorEmpresa($id_usuario);
-            foreach ($vagas_empresa as &$vaga) {
-                $vaga['candidatos'] = $inscricaoM->buscarCandidatosPorVaga($vaga['id']);
-            }
-            $data['vagas'] = $vagas_empresa;
-
-        } elseif ($data['tipo_perfil'] == 'admin') {
-            // Admin: Dados globais do sistema (pode listar tudo de tudo)
-            $data['total_vagas'] = count($vagasM->findAll());
-            $candidatoM = new CandidatoModel();
-            $data['total_candidatos'] = count($candidatoM->findAll());
-            $empresaM = new EmpresaModel();
-            $data['total_empresas'] = count($empresaM->findAll());
+        // Busca dados de acordo com quem está logado
+        if ($tipo_perfil === 'empresa') {
+            $data['vagas'] = $vagasM->buscarVagasPorEmpresa($this->session->get('id_usuario'));
+        } else {
+            // Candidato ou Admin visualizam todas as vagas
+            $data['vagas'] = $vagasM->buscarTodasVagas();
         }
 
         return view('principal', $data);
     }
 
-    // Grava a candidatura de forma assíncrona na tabela pivô
-    public function candidatar($id_vaga)
-    {
-        if (!$this->session->get('logado') || $this->session->get('tipo_perfil') != 'candidato') {
-            return $this->response->setJSON(['sucesso' => false, 'mensagem' => 'Não autorizado']);
-        }
-
-        $inscricaoM = new InscricaoModel();
-        $id_candidato = $this->session->get('id_usuario');
-
-        if (!$inscricaoM->jaInscrito($id_candidato, $id_vaga)) {
-            $inscricaoM->save([
-                'id_candidato' => $id_candidato,
-                'id_vagas'     => $id_vaga
-            ]);
-        }
-
-        return $this->response->setJSON(['sucesso' => true]);
-    }
-
-    // Salva o formulário enviado por criarconta.php
-    public function salvarCandidato() {
-        $candidatoM = new CandidatoModel();
-        $candidatoM->save([
-            'nome'        => $this->request->getPost('nome'),
-            'cpf'         => $this->request->getPost('cpf'),
-            'telefone'    => $this->request->getPost('telefone'),
-            'email'       => $this->request->getPost('email'),
-            'senha'       => $this->request->getPost('senha'),
-            'experiencia' => 'Nova conta',
-            'data_nasc'   => '2000-01-01'
-        ]);
-        return redirect()->to(base_url('/'))->with('sucesso', 'Conta de Candidato criada com sucesso!');
-    }
-
-    // Salva o formulário enviado por criarcontaempresa.php
-    public function salvarEmpresa() {
-        $empresaM = new EmpresaModel();
-        $empresaM->save([
-            'nome'     => $this->request->getPost('nome'),
-            'cnpj'     => $this->request->getPost('cnpj'),
-            'telefone' => $this->request->getPost('telefone'),
-            'email'    => $this->request->getPost('email'),
-            'senha'    => $this->request->getPost('senha'),
-        ]);
-        return redirect()->to(base_url('/'))->with('sucesso', 'Conta de Empresa criada com sucesso!');
-    }
-
     public function perfil()
     {
-        if (!$this->session->get('logado')) { return redirect()->to(base_url('/')); }
-        $data['usuario'] = [
-            'nome' => $this->session->get('nome'),
-            'email' => $this->session->get('email'),
-            'telefone' => '(31) 98765-4321', 'nascimento' => '12/03/1998',
-            'area' => 'TI', 'objetivo' => 'Desenvolvedor', 'experiencia' => '2 anos',
-            'formacao' => 'Análise de Sistemas', 'habilidades' => 'PHP, SQL'
-        ];
+        if (!$this->session->get('logado')) return redirect()->to(base_url('/'));
+        
+        $tipo = $this->session->get('tipo_perfil');
+        if ($tipo === 'admin') return redirect()->to(base_url('principal'));
+
+        $id = $this->session->get('id_usuario');
+        $data['tipo_perfil'] = $tipo;
+        $data['nome_usuario'] = $this->session->get('nome');
+
+        if ($tipo === 'candidato') {
+            $model = new CandidatoModel();
+            $data['usuario'] = $model->find($id);
+        } else {
+            $model = new EmpresaModel();
+            $data['usuario'] = $model->find($id);
+            
+            $vagasM = new vagasModel();
+            $data['vagas_empresa'] = $vagasM->where('id_empresa', $id)->paginate(4, 'vagas');
+            $data['pager'] = $vagasM->pager;
+        }
+
         return view('perfil', $data);
     }
 
-    public function criarVaga() {
-        if (!$this->session->get('logado') || $this->session->get('tipo_perfil') != 'empresa') {
+    public function login(): string { return view('login'); }
+
+    // Rotas Exclusivas do Administrador Geral
+    public function candidatosAdmin()
+    {
+        if (!$this->session->get('logado') || $this->session->get('tipo_perfil') !== 'admin') {
             return redirect()->to(base_url('/'));
         }
-        return view('criar_vaga');
+        $candM = new CandidatoModel();
+        $data['tipo_perfil'] = 'admin';
+        $data['nome_usuario'] = $this->session->get('nome');
+        $data['lista'] = $candM->paginate(4, 'candidatos');
+        $data['pager'] = $candM->pager;
+        $data['secao'] = 'candidatos';
+
+        return view('admin_listas', $data);
     }
 
-    public function salvarNovaVaga() {
+    public function empresasAdmin()
+    {
+        if (!$this->session->get('logado') || $this->session->get('tipo_perfil') !== 'admin') {
+            return redirect()->to(base_url('/'));
+        }
+        $empM = new EmpresaModel();
+        $vagasM = new vagasModel();
+        
+        $data['tipo_perfil'] = 'admin';
+        $data['nome_usuario'] = $this->session->get('nome');
+        
+        $empresas = $empM->paginate(4, 'empresas');
+        foreach ($empresas as &$emp) {
+            $emp['vagas'] = $vagasM->where('id_empresa', $emp['id'])->findAll();
+        }
+        
+        $data['lista'] = $empresas;
+        $data['pager'] = $empM->pager;
+        $data['secao'] = 'empresas';
+
+        return view('admin_listas', $data);
+    }
+
+    public function criarVaga()
+    {
+        if (!$this->session->get('logado') || $this->session->get('tipo_perfil') !== 'empresa') {
+            return redirect()->to(base_url('/'));
+        }
+        $data['nome_usuario'] = $this->session->get('nome');
+        $data['tipo_perfil'] = $this->session->get('tipo_perfil');
+        return view('criar_vaga', $data);
+    }
+
+    public function salvarNovaVaga()
+    {
+        if (!$this->session->get('logado') || $this->session->get('tipo_perfil') !== 'empresa') {
+            return redirect()->to(base_url('/'));
+        }
         $vagasM = new vagasModel();
         $vagasM->save([
             'nome'          => $this->request->getPost('nome'),
-            'statts'        => 'Aberta',
+            'statts'        => $this->request->getPost('statts'),
             'data_iniciada' => date('Y-m-d'),
             'requisitos'    => $this->request->getPost('requisitos'),
             'salario'       => $this->request->getPost('salario'),
@@ -202,9 +184,7 @@ class Home extends BaseController
         return redirect()->to(base_url('principal'));
     }
 
-    public function sair()
-    {
-        // Encerra e limpa a sessão
+    public function sair() {
         $this->session->destroy();
         return redirect()->to(base_url('/'));
     }
